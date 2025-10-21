@@ -11,27 +11,36 @@ import jakarta.faces.context.FacesContext;
 @RequestScoped
 //@SessionScoped
 public class CalcBB {
-	private String x;
-	private String y;
+	private String kwota;
+	private String okres;
+        private String op;
 	private Double result;
 
 	@Inject
 	FacesContext ctx;
 
-	public String getX() {
-		return x;
+	public String getKwota() {
+		return kwota;
 	}
 
-	public void setX(String x) {
-		this.x = x;
+	public void setKwota(String kwota) {
+		this.kwota = kwota;
 	}
 
-	public String getY() {
-		return y;
+	public String getOkres() {
+		return okres;
 	}
 
-	public void setY(String y) {
-		this.y = y;
+	public void setOkres(String okres) {
+		this.okres = okres;
+	}
+        
+        public String getOp() {
+		return op;
+	}
+
+	public void setOp(String op) {
+		this.op = op;
 	}
 
 	public Double getResult() {
@@ -44,10 +53,11 @@ public class CalcBB {
 
 	public boolean doTheMath() {
 		try {
-			double x = Double.parseDouble(this.x);
-			double y = Double.parseDouble(this.y);
+			double kwota = Double.parseDouble(this.kwota);
+			double okres = Double.parseDouble(this.okres);
+                        double op = Double.parseDouble(this.op);
 
-			result = x + y;
+			result =  (kwota + (op / 100 * kwota) * okres / 12);
 
 			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacja wykonana poprawnie", null));
 			return true;
