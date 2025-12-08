@@ -1,0 +1,10 @@
+jakarta\faces\simplesecurity\RemoteClient.class
+com\awa\entities\Students.class
+jakarta\faces\simplesecurity\SecurityFilter.class
+com\awa\dao\StudentsDAO.class
+com\awa\Students\StudentsListBB.class
+com\awa\login\LoginBB.class
+com\awa\entities\User.class
+com\awa\entities\Role.class
+com\awa\dao\UserDAO.class
+com\awa\Students\StudentsEditBB.class
