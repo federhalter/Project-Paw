@@ -54,7 +54,20 @@
                         <f:convertDateTime pattern="dd-MM-yyyy" />
                     </h:outputText>
                 </p:column>
+                <p:column>
+        <f:facet name="header">
+            <h:outputText value="grupa" />
+        </f:facet>
+        <h:outputText value="#{s.groupname}" />
+    </p:column>
 
+    <!-- NOWY KOLUMN: averagegrade -->
+    <p:column>
+        <f:facet name="header">
+            <h:outputText value="średnia" />
+        </f:facet>
+        <h:outputText value="#{s.averagegrade}" />
+    </p:column>
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="opcje" />
