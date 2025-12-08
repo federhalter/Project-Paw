@@ -16,7 +16,7 @@ public class UserDAO {
     @PersistenceContext(unitName = UNIT_NAME)
     protected EntityManager em;
 
-    // --- BASIC CRUD ---
+
 
     public void create(User user) {
         em.persist(user);
@@ -27,7 +27,7 @@ public class UserDAO {
     }
 
     try {
-        // Ищем пользователя по username и паролю
+     
         return em.createQuery(
                 "SELECT u FROM User u WHERE u.username = :username AND u.passwordhash = :password",
                 User.class)
@@ -35,14 +35,14 @@ public class UserDAO {
                 .setParameter("password", password) // уже хэшированный пароль
                 .getSingleResult();
     } catch (NoResultException e) {
-        return null; // пользователь не найден или неверный пароль
+        return null; 
     }
 }
     public User find(Object id) {
         return em.find(User.class, id);
     }
 
-    // --- GET ALL USERS ---
+  
     public List<User> getFullList() {
         List<User> list = null;
 
@@ -57,7 +57,7 @@ public class UserDAO {
         return list;
     }
 
-    // --- FIND BY USERNAME ---
+
     public User findByUsername(String username) {
         try {
             return em.createQuery(
@@ -69,7 +69,7 @@ public class UserDAO {
         }
     }
 
-    // --- FIND BY EMAIL ---
+
     public User findByEmail(String email) {
         try {
             return em.createQuery(
@@ -81,8 +81,7 @@ public class UserDAO {
         }
     }
 
-    // --- LOGIN CHECK ---
-    // ВНИМАНИЕ! passwordhash = уже хешированный пароль
+  
     public User login(String username, String passwordHash) {
         try {
             return em.createQuery(
@@ -92,13 +91,13 @@ public class UserDAO {
                     .setParameter("password", passwordHash)
                     .getSingleResult();
         } catch (NoResultException e) {
-            return null; // неверный логин или пароль
+            return null;
         }
     }
     
    public List<String> getUserRole(User user) {
     if (user == null || user.getRole() == null) {
-        return List.of(); // пустой список
+        return List.of(); 
     }
 
     return List.of(user.getRole().getName());
