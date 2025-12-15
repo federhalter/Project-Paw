@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<f:view locale="#{languageBB.locale}">
+    <h:head>
+        <meta charset="utf-8" />
+        <title>"#{msg['title']}"</title>
+    </h:head>
+    <h:body style="background-color: #eee; margin: 0.5em;">
+        <h:form id="menuForm">
+            <p:menubar>
+                <!-- Кнопка выхода -->
+                <p:menuitem value="#{msg['button.logout']}" 
+                            icon="pi pi-sign-out" 
+                            action="#{loginBB.doLogout()}" />
+
+                <!-- Меню выбора языка -->
+                <p:submenu label="#{msg['menu.language']}" icon="pi pi-globe">
+                    <p:menuitem value="PL" 
+                                action="#{languageBB.setPolish}" 
+                                update="@all" 
+                                icon="pi pi-flag"/>
+                    <p:menuitem value="EN" 
+                                action="#{languageBB.setEnglish}" 
+                                update="@all" 
+                                icon="pi pi-flag"/>
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+        <p:panel header="#{msg['label.oSearch']}" toggleable="true" collapsed="true"
+                 style="margin-bottom: 1em;">
+            <h:form>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="#{msg['label.lastName']}" />
+                    <p:inputText value="#{studentsListBB.lastname}" />
+                    <p:commandButton value="#{msg['button.search']}" update="form-table" />
+                </h:panelGrid>
+            </h:form>
+        </p:panel>
+
+        <p:messages />
+
+        <h:form id="form-table" style="margin-bottom:1em;">
+
+            <p:commandButton value="#{msg['button.add']}" style="margin-bottom:1em;" 
+                             action="#{studentsListBB.newStudent()}"/>
+
+            <p:dataTable value="#{studentsListBB.list}" var="s">
+
+                <p:column responsivePriority="5">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg['label.name']}" />
+                    </f:facet>
+                    <h:outputText value="#{s.firstname}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg['label.lastName']}" />
+                    </f:facet>
+                    <h:outputText value="#{s.lastname}" />
+                </p:column>
+
+                <p:column responsivePriority="4">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg['label.birthDate']}" />
+                    </f:facet>
+                    <h:outputText value="#{s.birthdate}">
+                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="grupa" />
+                    </f:facet>
+                    <h:outputText value="#{s.groupname}" />
+                </p:column>
+
+                <!-- NOWY KOLUMN: averagegrade -->
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg['label.avg']}" />
+                    </f:facet>
+                    <h:outputText value="#{s.averagegrade}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg['label.options']}" />
+                    </f:facet>
+
+                    <p:commandButton value="#{msg['button.edit']}" style="margin-right: 0.5em"
+                                     action="#{studentsListBB.editStudent(s)}"/>
+
+                    <p:commandButton value="#{msg['button.delete']}" style="margin-right: 0.5em"
+                                     action="#{studentsListBB.deleteStudent(s)}"
+                                     update="@form" />
+
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+        <h:outputText value="Zalogowany: #{userSession.user.username}" />
+        <h:outputText value="Rola: #{userSession.roles[0]}" />
+        <ui:fragment rendered="#{userSession.loggedIn}">
+            <h:outputText value="Rola jest" />
+        </ui:fragment>
+        <ui:fragment rendered="#{userSession.hasRole('admin')}">
+            <h:outputText value="Usuń" />
+        </ui:fragment>
+    </h:body>
+    </f:view>
+</html>
+    
